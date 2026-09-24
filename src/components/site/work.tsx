@@ -19,14 +19,14 @@ export default function Work() {
 						<p className="mt-4 text-muted">From idea to production — design, code, deploys and the details in between.</p>
 					</div>
 
-					<div role="tablist" aria-label="Filter projects" className="reveal no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:px-0">
+					<div role="tablist" aria-label="Filter projects" className="reveal flex flex-wrap gap-2">
 						{projectFilters.map((f) => (
 							<button
 								key={f.id}
 								role="tab"
 								aria-selected={filter === f.id}
 								onClick={() => setFilter(f.id)}
-								className={cn("shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors", filter === f.id ? "border-fg bg-fg text-bg" : "bg-surface text-muted hover:text-fg")}
+								className={cn("rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors sm:px-4 sm:py-2", filter === f.id ? "border-fg bg-fg text-bg" : "bg-surface text-muted hover:text-fg")}
 							>
 								{f.label}
 							</button>

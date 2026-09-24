@@ -14,11 +14,11 @@ export default function Skills() {
 				{/* Stack journey */}
 				<div className="reveal card mt-10 p-5 sm:p-6">
 					<p className="font-mono text-[11px] uppercase tracking-wider text-muted">Stack journey · 2013 → today</p>
-					<ol className="no-scrollbar mt-4 flex items-center gap-2 overflow-x-auto pb-1">
+					<ol className="mt-4 flex flex-wrap items-center gap-2">
 						{stackJourney.map((s, i) => (
-							<li key={s} className="flex shrink-0 items-center gap-2">
+							<li key={s} className="flex items-center gap-2">
 								<span className={i === stackJourney.length - 1 ? "rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-fg" : "rounded-full border bg-surface-2 px-4 py-2 text-sm font-medium"}>{s}</span>
-								{i < stackJourney.length - 1 ? <ChevronRight className="h-4 w-4 text-muted" /> : null}
+								{i < stackJourney.length - 1 ? <ChevronRight className="hidden h-4 w-4 text-muted sm:block" /> : null}
 							</li>
 						))}
 					</ol>

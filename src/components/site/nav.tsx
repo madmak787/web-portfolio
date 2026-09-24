@@ -80,7 +80,7 @@ export default function Nav() {
 						const isActive = active === id;
 						return (
 							<li key={id}>
-								<a href={`#${id}`} aria-current={isActive ? "true" : undefined} className={cn("flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors", isActive ? "text-accent" : "text-muted")}>
+								<a href={`#${id}`} aria-current={isActive ? "true" : undefined} className={cn("flex flex-col items-center gap-1 px-0.5 py-2 text-[10px] font-medium leading-none transition-colors min-[380px]:text-[11px]", isActive ? "text-accent" : "text-muted")}>
 									<span className={cn("flex h-7 w-12 items-center justify-center rounded-full transition-colors", isActive && "bg-accent/10")}>
 										<Icon className="h-[18px] w-[18px]" strokeWidth={isActive ? 2.4 : 2} />
 									</span>

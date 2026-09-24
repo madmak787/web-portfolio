@@ -41,6 +41,13 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
+	@media (max-width: 767px) {
+		html {
+			/* Keep anchored sections clear of the fixed bottom tab bar. */
+			scroll-padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+		}
+	}
+
 	body {
 		@apply bg-bg font-sans text-fg antialiased;
 		text-rendering: optimizeLegibility;
@@ -59,11 +66,11 @@
 
 @layer components {
 	.eyebrow {
-		@apply font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent;
+		@apply font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-accent sm:text-xs sm:tracking-[0.2em];
 	}
 
 	.section-title {
-		@apply font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl md:text-[2.75rem] md:leading-[1.1];
+		@apply text-balance font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl md:text-[2.75rem] md:leading-[1.1];
 	}
 
 	.card {

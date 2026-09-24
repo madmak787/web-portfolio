@@ -29,7 +29,7 @@ export default function Experience() {
 									<Logo src={job.logo} className="h-11 w-11 rounded-xl p-1.5 sm:hidden" />
 									<div className="flex flex-1 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
 										<div>
-											<h3 className="font-display text-lg font-semibold leading-snug">{job.role}</h3>
+											<h3 className="text-balance font-display text-lg font-semibold leading-snug">{job.role}</h3>
 											<p className="text-sm font-medium text-accent">
 												{job.company}
 												<span className="font-normal text-muted"> · {job.location}</span>
