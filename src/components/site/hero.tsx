@@ -74,7 +74,7 @@ function ProfileCard() {
 		["role", `"${profile.role}"`],
 		["based", `"${profile.location}"`],
 		["ships", `["web", "iOS", "e-commerce"]`],
-		["stack", `["Next.js", "TypeScript", "Swift", "Laravel"]`],
+		["stack", `["Next.js", "React Native", "Ionic", "Capacitor"]`],
 		["workflow", `"AI to prototype, engineering to harden"`],
 	];
 

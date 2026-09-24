@@ -4,7 +4,7 @@ export const site = {
 	url: "https://khanamir.me",
 	title: "Mohd Amir Khan — Senior Full-Stack Engineer",
 	description:
-		"Senior full-stack engineer with 13 years and 300+ websites behind him. I ship complete products across web, iOS and e-commerce with Next.js, TypeScript, Swift, Laravel and Magento.",
+		"Senior full-stack engineer with 13 years and 300+ websites behind him. I ship complete products across web, iOS and e-commerce with Next.js, TypeScript, React Native, Ionic, Capacitor, Laravel and Magento.",
 };
 
 export const profile = {
@@ -171,14 +171,14 @@ export const clientWork: ClientWork[] = [
 
 export const skillGroups: { title: string; items: string[] }[] = [
 	{ title: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "GSAP"] },
-	{ title: "Mobile", items: ["SwiftUI", "WidgetKit", "CoreNFC", "Ionic", "Capacitor", "PWA"] },
+	{ title: "Mobile", items: ["React Native", "Ionic", "Capacitor", "PWA"] },
 	{ title: "Backend", items: ["Node.js", "Express", "PHP", "Laravel", "CodeIgniter", "REST APIs"] },
 	{ title: "Commerce & CMS", items: ["Magento", "WordPress", "Payment gateways", "Headless commerce"] },
 	{ title: "Data", items: ["MySQL", "PostgreSQL", "MongoDB", "SQLite", "MSSQL"] },
 	{ title: "Cloud & DevOps", items: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Varnish", "Memcached", "Linux"] },
 ];
 
-export const stackJourney = ["Core PHP", "Magento", "Laravel", "React", "Next.js", "Swift"];
+export const stackJourney = ["Core PHP", "Magento", "Laravel", "React", "Next.js", "React Native", "Ionic", "Capacitor"];
 
 export const principles = [
 	{
