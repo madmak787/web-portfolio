@@ -1,0 +1,13 @@
+# Uploaded by the deploy workflow only when the site root has no .htaccess of its own.
+DirectoryIndex index.html index.php
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+	# Next.js hashes these filenames, so they can be cached forever.
+	<FilesMatch "\.(js|css|woff2)$">
+		Header set Cache-Control "public, max-age=31536000, immutable"
+	</FilesMatch>
+	<FilesMatch "\.html$">
+		Header set Cache-Control "public, max-age=0, must-revalidate"
+	</FilesMatch>
+</IfModule>

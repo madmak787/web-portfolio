@@ -1,0 +1,134 @@
+name: Build & Deploy Portfolio
+
+# Publishes the static export to the root of khanamir.me over FTPS.
+# Upload-only: nothing on the server is ever deleted, so existing sub-folders
+# (tools/, tool/, blog/ …) are left exactly as they are.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      replace_index_php:
+        description: "If the root has an index.php, rename it to index.php.bak-<timestamp> so index.html is served"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-khanamir
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build static export
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: out/
+          include-hidden-files: true
+          retention-days: 3
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy to khanamir.me
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      REPLACE_INDEX_PHP: ${{ inputs.replace_index_php || 'false' }}
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          if [ -z "$FTP_SERVER" ] || [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "::warning::FTP_SERVER / FTP_USERNAME / FTP_PASSWORD are not set on this repo, skipping deploy."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          sparse-checkout: deploy
+
+      - uses: actions/download-artifact@v4
+        if: steps.secrets.outputs.ready == 'true'
+        with:
+          name: static-site
+          path: out
+
+      - name: Install lftp
+        if: steps.secrets.outputs.ready == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Pre-flight check of the site root
+        if: steps.secrets.outputs.ready == 'true'
+        id: preflight
+        run: |
+          host="${FTP_SERVER#ftp://}"; host="${host#ftps://}"; host="${host%/}"
+          echo "host=$host" >> "$GITHUB_OUTPUT"
+          # Hostinger's FTPS certificate is issued for *.hstgr.io, not the server IP,
+          # so the name can't be verified; the connection is still TLS-encrypted.
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$host" -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; cd /; cls -1a; bye" | sed -e 's#^/##' -e 's#/$##' > root.txt
+          echo "Current site root:"; cat root.txt
+
+          # Sanity check: this must be the khanamir.me root that already holds the tool sub-sites.
+          if ! grep -qxE 'tools|tool' root.txt; then
+            echo "::error::Expected tools/ or tool/ in the FTP root. This doesn't look like the khanamir.me root, aborting without changes."
+            exit 1
+          fi
+
+          grep -qx '\.htaccess' root.txt && echo "has_htaccess=true" >> "$GITHUB_OUTPUT" || echo "has_htaccess=false" >> "$GITHUB_OUTPUT"
+          if grep -qx 'index\.php' root.txt; then
+            if [ "$REPLACE_INDEX_PHP" = "true" ]; then
+              echo "rename_index=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "::error::The root has an index.php, which may be served instead of the new index.html. Nothing was changed. Re-run this workflow manually with 'replace_index_php' ticked to rename it to a backup (it is never deleted)."
+              exit 1
+            fi
+          fi
+
+      - name: Upload site (never deletes remote files)
+        if: steps.secrets.outputs.ready == 'true'
+        env:
+          HOST: ${{ steps.preflight.outputs.host }}
+          HAS_HTACCESS: ${{ steps.preflight.outputs.has_htaccess }}
+          RENAME_INDEX: ${{ steps.preflight.outputs.rename_index }}
+        run: |
+          cmds="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set net:max-retries 3;"
+          if [ "$RENAME_INDEX" = "true" ]; then
+            cmds="$cmds mv /index.php /index.php.bak-$(date -u +%Y%m%d%H%M%S);"
+          fi
+          # mirror -R without --delete only adds/overwrites; unknown remote files and folders are untouched.
+          cmds="$cmds mirror -R --verbose --parallel=4 out/ /;"
+          if [ "$HAS_HTACCESS" = "false" ]; then
+            cmds="$cmds put deploy/.htaccess -o /.htaccess;"
+          else
+            echo "::notice::Root already has a .htaccess; left untouched."
+          fi
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$HOST" -e "$cmds bye"
+
+      - name: Smoke test
+        if: steps.secrets.outputs.ready == 'true'
+        run: |
+          sleep 5
+          curl -fsSL https://khanamir.me/ | grep -q "I ship complete products" && echo "khanamir.me is serving the new portfolio" || echo "::warning::khanamir.me did not return the new homepage yet (cache, or index.php still taking priority)."
