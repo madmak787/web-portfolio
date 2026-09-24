@@ -1,4 +1,4 @@
-import { ArrowRight, Github, Linkedin, MapPin } from "lucide-react";
+import { ArrowRight, FileDown, Github, Linkedin, MapPin } from "lucide-react";
 import { profile, stats } from "@/lib/data";
 
 export default function Hero() {
@@ -40,6 +40,10 @@ export default function Hero() {
 						</a>
 						<a href="#contact" className="btn-ghost">
 							Get in touch
+						</a>
+						<a href={profile.links.resume} target="_blank" rel="noopener" className="btn-ghost">
+							<FileDown className="h-4 w-4" />
+							Resume
 						</a>
 						<div className="flex items-center gap-2 sm:ml-1">
 							<a href={profile.social.github} target="_blank" rel="noreferrer" className="icon-btn" aria-label="GitHub">

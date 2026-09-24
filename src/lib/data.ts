@@ -2,15 +2,15 @@
 
 export const site = {
 	url: "https://khanamir.me",
-	title: "Mohd Amir Khan — Senior Full-Stack Engineer",
+	title: "Mohd Amir Khan — Full-Stack Engineering Lead",
 	description:
-		"Senior full-stack engineer with 13 years and 300+ websites behind him. I ship complete products across web, iOS and e-commerce with Next.js, TypeScript, React Native, Ionic, Capacitor, Laravel and Magento.",
+		"Full-stack engineering lead with 13 years and 300+ websites behind him. I ship complete products across web, iOS and e-commerce with Next.js, TypeScript, React Native, Ionic, Capacitor, Laravel and Magento.",
 };
 
 export const profile = {
 	name: "Mohd Amir Khan",
 	short: "MAK",
-	role: "Senior Full-Stack Engineer",
+	role: "Full-Stack Engineering Lead",
 	headline: "I ship complete products — web, iOS & e-commerce.",
 	intro:
 		"13 years turning ideas into production software: storefronts, dashboards, payment flows and native apps. I use AI to prototype fast and engineering to make it hold up.",
@@ -27,6 +27,7 @@ export const profile = {
 	links: {
 		blog: "https://khanamir.me/blog/",
 		tools: "https://khanamir.me/tools/",
+		resume: "/Mohd_Amir_Khan_Resume.pdf",
 	},
 };
 
@@ -140,7 +141,7 @@ export const clientWork: ClientWork[] = [
 	{
 		title: "UP Local-Body Elections",
 		tag: "Government · Team lead",
-		description: "First team-lead role: led 8 engineers on a state election project with a deadline that could not move.",
+		description: "First team-lead role: led 8 engineers on a state election project, working directly with the Director of Local Bodies.",
 		icon: "landmark",
 	},
 	{
@@ -162,9 +163,9 @@ export const clientWork: ClientWork[] = [
 		icon: "smartphone",
 	},
 	{
-		title: "Remote agency partnerships",
+		title: "WPSPINS & HolidayHomeConcepts",
 		tag: "US clients",
-		description: "Long-running delivery for agencies in the US, with overlap hours, async updates and a steady demo cadence.",
+		description: "Website development partner for WPSPINS.com in Houston, TX, and for HolidayHomeConcepts.com, delivered remotely.",
 		icon: "globe",
 	},
 ];
@@ -203,41 +204,109 @@ export type ExperienceItem = {
 	company: string;
 	role: string;
 	period: string;
+	location: string;
 	logo?: string;
+	current?: boolean;
 	points: string[];
 };
 
 export const experience: ExperienceItem[] = [
 	{
-		company: "Sivana ICC",
-		role: "IT Lead & Senior Software Engineer",
-		period: "Feb 2017 — Present",
-		logo: "/images/logos/sivana-mark.png",
+		company: "eClerx",
+		role: "Process Manager — Full-Stack Engineering Lead",
+		period: "Jul 2024 — Present",
+		location: "Remote · Mumbai team",
+		logo: "/images/logos/eclerx-logo.png",
+		current: true,
 		points: [
-			"Lead engineering on client products across Next.js, React, Laravel, Magento and WordPress.",
-			"Own architecture, caching and deployment for high-traffic client sites.",
-			"Lead delivery for remote clients, from scoping through launch and support.",
+			"Lead a cross-functional team delivering web products while staying hands-on in the code.",
+			"Build and review features with React, Next.js, Node.js and TypeScript; own architecture, code reviews and delivery standards.",
+			"Turn stakeholder needs into technical roadmaps and releases, and mentor developers on modern JS/TS and AI-assisted workflows.",
 		],
 	},
 	{
-		company: "Incedo Inc",
+		company: "Sivana (ARC)",
+		role: "Lead Software Engineer",
+		period: "Feb 2018 — Jul 2024",
+		location: "Remote · New Delhi",
+		logo: "/images/logos/sivana-mark.png",
+		points: [
+			"Led the engineering team, owning project delivery, client meetings and hands-on development.",
+			"Moved the highest-traffic websites to AWS and cut response times with APC, Varnish and Memcached.",
+		],
+	},
+	{
+		company: "Incedo Inc.",
 		role: "Senior Software Engineer",
 		period: "Jun 2017 — Feb 2018",
+		location: "Gurugram",
 		logo: "/images/logos/incedo-logo.png",
-		points: ["Built and maintained customer-facing web applications with product and design teams."],
+		points: [
+			"Led Magento e-commerce development, including ONE Championship's store, with better UI/UX and responsiveness.",
+			"Integrated Facebook, Twitter and other social login APIs, working directly with international clients.",
+		],
+	},
+	{
+		company: "Byte Matrix Pvt. Ltd.",
+		role: "Sr. Web Developer",
+		period: "Jul 2015 — Jun 2017",
+		location: "New Delhi",
+		logo: "/images/logos/bytematrix-logo.jpeg",
+		points: [
+			"Delivered client projects on open-source platforms, and led client meetings and resource planning.",
+			"Integrated Stripe, PayPal, Authorize.net, WorldPay, eWay, HDFC and Axis Bank payment gateways.",
+			"Built Dealighted, a deals platform for Omantel users in Muscat, and rebuilt the Magento store for Scentra.",
+		],
 	},
 	{
 		company: "Rishti India",
-		role: "PHP Developer",
-		period: "2013",
+		role: "Software Engineer",
+		period: "Feb 2013 — Jul 2015",
+		location: "New Delhi",
 		logo: "/images/logos/rishti-logo.jpeg",
-		points: ["Where it started: core PHP, MySQL and the first of 300+ websites."],
+		points: [
+			"Built web apps in core PHP, Magento, WordPress, Joomla, Drupal, OpenCart, osCommerce and PrestaShop.",
+			"Led a team of 8 on the UP government local-body elections project, working directly with the Director of Local Bodies.",
+		],
 	},
 ];
 
 export const education = [
-	{ degree: "B.Tech, Computer Science", institute: "RRSIMT (AKTU)", logo: "/images/logos/rrsimt-logo.jpeg" },
-	{ degree: "Diploma, Computer Science", institute: "Bakhshi Polytechnic (BTEUP)", logo: "/images/logos/bakhshi-logo.jpeg" },
+	{
+		degree: "Bachelor's, Computer Science",
+		institute: "Rajarshi Ranjay Sinh Institute of Management & Technology, Sultanpur",
+		period: "2011 — 2014",
+		detail: "Grade A · College President",
+		logo: "/images/logos/rrsimt-logo.jpeg",
+	},
+	{
+		degree: "Diploma, Computer Science & Engineering",
+		institute: "Bakhshi Polytechnic (UP Board of Technical Education)",
+		period: "2008 — 2011",
+		detail: "Grade A+",
+		logo: "/images/logos/bakhshi-logo.jpeg",
+	},
+];
+
+export const certifications = [
+	{
+		name: "Meta Front-End Developer",
+		issuer: "Meta · Coursera",
+		href: "https://www.coursera.org/account/accomplishments/certificate/LMNM2GK7BC6K",
+	},
+	{
+		name: "Practical PHP: Master the Basics and Code Dynamic Websites",
+		issuer: "Udemy · 2020",
+		href: "https://www.udemy.com/certificate/UC-b2aec227-bc9c-47c8-b189-34b3436f14d6/",
+	},
+];
+
+export const skillAssessments = ["React.js", "PHP", "WordPress", "HTML", "MySQL"];
+
+export const languages = [
+	{ name: "English", level: "Full professional" },
+	{ name: "Hindi", level: "Full professional" },
+	{ name: "Urdu", level: "Limited working" },
 ];
 
 export const navItems = [

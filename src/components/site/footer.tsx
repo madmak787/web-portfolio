@@ -1,6 +1,7 @@
 import { profile } from "@/lib/data";
 
 const links = [
+	{ label: "Resume", href: profile.links.resume },
 	{ label: "Blog", href: profile.links.blog },
 	{ label: "Tools", href: profile.links.tools },
 	{ label: "GitHub", href: profile.social.github },
