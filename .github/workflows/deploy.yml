@@ -53,6 +53,8 @@ jobs:
       FTP_SERVER: ${{ secrets.FTP_SERVER }}
       FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
       FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      # Site root on the FTP server; Hostinger serves the domain from public_html.
+      REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR || '/public_html' }}
       REPLACE_INDEX_PHP: ${{ inputs.replace_index_php || 'false' }}
     steps:
       - name: Check secrets
@@ -88,7 +90,7 @@ jobs:
           echo "host=$host" >> "$GITHUB_OUTPUT"
           # Hostinger's FTPS certificate is issued for *.hstgr.io, not the server IP,
           # so the name can't be verified; the connection is still TLS-encrypted.
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$host" -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; cd /; cls -1a; bye" | sed -e 's#^/##' -e 's#/$##' > root.txt
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$host" -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; cd $REMOTE_DIR; cls -1a; bye" | sed -e 's#^/##' -e 's#/$##' > root.txt
           echo "Current site root:"; cat root.txt
 
           # Sanity check: this must be the khanamir.me root that already holds the tool sub-sites.
@@ -116,12 +118,12 @@ jobs:
         run: |
           cmds="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; set net:max-retries 3;"
           if [ "$RENAME_INDEX" = "true" ]; then
-            cmds="$cmds mv /index.php /index.php.bak-$(date -u +%Y%m%d%H%M%S);"
+            cmds="$cmds mv $REMOTE_DIR/index.php $REMOTE_DIR/index.php.bak-$(date -u +%Y%m%d%H%M%S);"
           fi
           # mirror -R without --delete only adds/overwrites; unknown remote files and folders are untouched.
-          cmds="$cmds mirror -R --verbose --parallel=4 out/ /;"
+          cmds="$cmds mirror -R --verbose --parallel=4 out/ $REMOTE_DIR/;"
           if [ "$HAS_HTACCESS" = "false" ]; then
-            cmds="$cmds put deploy/.htaccess -o /.htaccess;"
+            cmds="$cmds put deploy/.htaccess -o $REMOTE_DIR/.htaccess;"
           else
             echo "::notice::Root already has a .htaccess; left untouched."
           fi
