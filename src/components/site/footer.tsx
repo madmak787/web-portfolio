@@ -17,7 +17,10 @@ export default function Footer() {
 				<div className="flex items-center gap-3">
 					<span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-display text-sm font-bold text-accent-fg">{profile.short}</span>
 					<p className="text-sm text-muted">
-						© {new Date().getFullYear()} {profile.name}
+						© {new Date().getFullYear()} {profile.name} · Coded By &copy;
+						<a href="https://khanamir.me" target="_blank" rel="noopener" className="font-medium transition-colors hover:text-fg">
+							madmak787
+						</a>
 					</p>
 				</div>
 				<nav aria-label="Footer">
