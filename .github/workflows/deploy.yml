@@ -133,4 +133,4 @@ jobs:
         if: steps.secrets.outputs.ready == 'true'
         run: |
           sleep 5
-          curl -fsSL https://khanamir.me/ | grep -q "I ship complete products" && echo "khanamir.me is serving the new portfolio" || echo "::warning::khanamir.me did not return the new homepage yet (cache, or index.php still taking priority)."
+          curl -fsSL https://khanamir.me/ | grep -q "shipping software since 2013\|Aadaab" && echo "khanamir.me is serving the new portfolio" || echo "::warning::khanamir.me did not return the new homepage yet (cache, or index.php still taking priority)."
