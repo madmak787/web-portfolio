@@ -123,4 +123,67 @@ const visuals: Record<Project["visual"], React.ReactNode> = {
 			))}
 		</div>
 	),
+	cabin: (
+		<svg viewBox="0 0 220 130" className="w-52 sm:w-60">
+			{/* Isometric cabin: front, side and roof faces, with a door and window cut out. */}
+			<polygon points="30,70 110,110 110,60 30,20" fill="rgb(var(--fg) / 0.12)" stroke="rgb(var(--fg) / 0.6)" strokeWidth="1.5" />
+			<polygon points="110,110 190,70 190,20 110,60" fill="rgb(var(--accent) / 0.22)" stroke="rgb(var(--fg) / 0.6)" strokeWidth="1.5" />
+			<polygon points="24,20 110,62 196,20 110,-18" transform="translate(0 2)" fill="rgb(var(--accent) / 0.55)" stroke="rgb(var(--fg) / 0.6)" strokeWidth="1.5" />
+			<polygon points="52,56 70,65 70,90 52,81" fill="rgb(var(--surface))" stroke="rgb(var(--fg) / 0.6)" />
+			<polygon points="130,62 160,47 160,62 130,77" fill="rgb(var(--surface))" stroke="rgb(var(--fg) / 0.6)" />
+			<line x1="30" y1="72" x2="30" y2="118" stroke="rgb(var(--muted) / 0.6)" strokeDasharray="3 3" />
+			<line x1="110" y1="112" x2="110" y2="126" stroke="rgb(var(--muted) / 0.6)" strokeDasharray="3 3" />
+			<text x="62" y="126" className="fill-muted font-mono" fontSize="8">20&apos;0&quot;</text>
+		</svg>
+	),
+	code: (
+		<Window>
+			<div className="space-y-1.5 font-mono text-[10px] leading-tight">
+				<p><span className="text-muted">{"{"}</span></p>
+				<p className="pl-3"><span className="text-accent">&quot;tools&quot;</span>: <span className="text-ok">45</span>,</p>
+				<p className="pl-3"><span className="text-accent">&quot;signup&quot;</span>: <span className="text-fg">false</span>,</p>
+				<p className="pl-3"><span className="text-accent">&quot;runs&quot;</span>: <span className="text-ok">&quot;in-browser&quot;</span></p>
+				<p><span className="text-muted">{"}"}</span></p>
+			</div>
+			<div className="mt-3 flex flex-wrap gap-1">
+				{["JSON", "JWT", "Regex", "SQL", "QR", "Cron"].map((t) => (
+					<span key={t} className="rounded border px-1.5 py-0.5 font-mono text-[8px] text-muted">{t}</span>
+				))}
+			</div>
+		</Window>
+	),
+	schema: (
+		<svg viewBox="0 0 220 120" className="w-52 sm:w-60">
+			{[
+				{ x: 10, y: 14, title: "users", rows: ["id", "email", "name"] },
+				{ x: 130, y: 6, title: "orders", rows: ["id", "user_id", "total"] },
+				{ x: 130, y: 72, title: "items", rows: ["id", "order_id"] },
+			].map((t) => (
+				<g key={t.title}>
+					<rect x={t.x} y={t.y} width="80" height={16 + t.rows.length * 12} rx="5" fill="rgb(var(--surface))" stroke="rgb(var(--fg) / 0.35)" />
+					<rect x={t.x} y={t.y} width="80" height="15" rx="5" fill="rgb(var(--accent))" />
+					<text x={t.x + 6} y={t.y + 11} fontSize="8" fill="white" className="font-mono">{t.title}</text>
+					{t.rows.map((r, i) => (
+						<text key={r} x={t.x + 6} y={t.y + 26 + i * 12} fontSize="7.5" className="fill-muted font-mono">{r}</text>
+					))}
+				</g>
+			))}
+			<path d="M90 36 C 110 36, 110 32, 130 32" fill="none" stroke="rgb(var(--accent))" strokeWidth="1.5" />
+			<path d="M170 58 L 170 72" fill="none" stroke="rgb(var(--accent))" strokeWidth="1.5" />
+		</svg>
+	),
+	map: (
+		<Window>
+			<div className="relative h-24 overflow-hidden rounded-md bg-[radial-gradient(rgb(var(--fg)/0.14)_1px,transparent_1px)] [background-size:8px_8px]">
+				<span className="absolute left-[58%] top-[38%] flex h-3 w-3 -translate-x-1/2 -translate-y-1/2">
+					<span className="absolute inset-0 animate-ping rounded-full bg-accent/50" />
+					<span className="relative h-3 w-3 rounded-full border-2 border-white bg-accent" />
+				</span>
+			</div>
+			<div className="mt-2 flex justify-between font-mono text-[9px]">
+				<span className="text-fg">203.0.113.42</span>
+				<span className="text-muted">Lucknow · AS9829</span>
+			</div>
+		</Window>
+	),
 };

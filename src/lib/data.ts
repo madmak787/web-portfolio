@@ -26,7 +26,7 @@ export const profile = {
 	},
 	links: {
 		blog: "https://khanamir.me/blog/",
-		tools: "https://khanamir.me/tools/",
+		tools: "https://tools.khanamir.me",
 		resume: "/Mohd_Amir_Khan_Resume.pdf",
 	},
 };
@@ -48,7 +48,7 @@ export type Project = {
 	summary: string;
 	highlights: string[];
 	stack: string[];
-	visual: "metrics" | "speed" | "phone" | "gift" | "canvas" | "tools";
+	visual: "metrics" | "speed" | "phone" | "gift" | "canvas" | "tools" | "cabin" | "code" | "schema" | "map";
 	href?: string;
 };
 
@@ -61,6 +61,50 @@ export const projectFilters: { id: "all" | ProjectKind; label: string }[] = [
 ];
 
 export const projects: Project[] = [
+	{
+		id: "dfab-cabin-designer",
+		title: "DFAB Cabin Designer",
+		kind: "web",
+		category: "3D configurator · Client build",
+		summary: "Design a portable cabin in 3D, get dimensioned drawings, and send a branded quotation in minutes. No server, no login.",
+		highlights: ["Live 3D model with real wall cut-outs", "Floor plan, elevations & DXF export", "Instant GST quotation & WhatsApp share"],
+		stack: ["Next.js", "three.js", "React Three Fiber", "Zustand"],
+		visual: "cabin",
+		href: "https://dfabcabin.com/draw/",
+	},
+	{
+		id: "devtools",
+		title: "DevTools",
+		kind: "tools",
+		category: "Developer suite",
+		summary: "45 free developer utilities in one place, all running privately in the browser.",
+		highlights: ["JSON, diff, regex & SQL formatters", "JWT, hashes, Base64 & QR codes", "Cron parser & color converter"],
+		stack: ["Next.js", "TypeScript", "Tailwind"],
+		visual: "code",
+		href: "https://tool.khanamir.me/devtools",
+	},
+	{
+		id: "matrixforge",
+		title: "MatrixForge",
+		kind: "tools",
+		category: "Schema designer",
+		summary: "Draw tables and relationships visually, import existing SQL, and export database scripts or an ER diagram.",
+		highlights: ["MySQL, PostgreSQL & SQLite export", "SQL import", "PNG / SVG ER diagrams"],
+		stack: ["Next.js", "TypeScript", "shadcn/ui"],
+		visual: "schema",
+		href: "https://tool.khanamir.me/matrix",
+	},
+	{
+		id: "pingspot",
+		title: "PingSpot",
+		kind: "tools",
+		category: "IP & domain locator",
+		summary: "See your public IPv4 and IPv6, then look up the location, ISP, ASN and timezone of any IP or domain on a live map.",
+		highlights: ["IPv4 & IPv6 detection", "Domain lookup", "Live map"],
+		stack: ["Next.js", "Leaflet", "Static export"],
+		visual: "map",
+		href: "https://tool.khanamir.me/pingspot",
+	},
 	{
 		id: "speedmetrics",
 		title: "SpeedMetrics",
@@ -96,31 +140,33 @@ export const projects: Project[] = [
 		title: "SpeedyCheck",
 		kind: "tools",
 		category: "PWA",
-		summary: "An installable internet speed test with automated deploys on every push.",
+		summary: "An installable internet speed test: download, upload, ping, jitter and packet loss, compared against your plan.",
 		highlights: ["Installable PWA", "Cloudflare Speedtest", "CI/CD with GitHub Actions"],
 		stack: ["Next.js", "Cloudflare", "GitHub Actions"],
 		visual: "speed",
+		href: "https://tool.khanamir.me/speedycheck",
 	},
 	{
 		id: "sketchneko",
 		title: "SketchNeko",
-		kind: "web",
-		category: "Creative app",
-		summary: "A playful, anime-styled drawing board that runs in the browser.",
-		highlights: ["Canvas drawing tools", "Playful themed UI", "Works on touch devices"],
-		stack: ["Next.js", "shadcn/ui"],
+		kind: "tools",
+		category: "Whiteboard",
+		summary: "A hand-drawn style whiteboard for diagrams, wireframes and notes. Private, no sign-up.",
+		highlights: ["Shapes, arrows, text & images", "PNG / SVG export", "Works on touch devices"],
+		stack: ["Next.js", "Rough.js", "shadcn/ui"],
 		visual: "canvas",
+		href: "https://tool.khanamir.me/sketch",
 	},
 	{
 		id: "tools",
-		title: "Free Web Tools",
+		title: "Tools Hub",
 		kind: "tools",
-		category: "Utilities",
-		summary: "Small tools shipped end to end — each with CI/CD, SEO and legal pages — including a resume builder and an IP checker.",
-		highlights: ["Resume builder", "IP checker", "More on the way"],
-		stack: ["Next.js", "Tailwind", "GitHub Actions"],
+		category: "Tools catalog",
+		summary: "The home for all my free tools, loaded live, with a 3D three.js hero, search and category filters.",
+		highlights: ["7 live tools, including 45 dev utilities", "Resume builder & IP checker API", "Every tool runs in the browser"],
+		stack: ["Next.js", "three.js", "GitHub Actions"],
 		visual: "tools",
-		href: "https://khanamir.me/tools/",
+		href: "https://tools.khanamir.me",
 	},
 ];
 
@@ -171,7 +217,7 @@ export const clientWork: ClientWork[] = [
 ];
 
 export const skillGroups: { title: string; items: string[] }[] = [
-	{ title: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "GSAP"] },
+	{ title: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "GSAP", "three.js"] },
 	{ title: "Mobile", items: ["React Native", "Ionic", "Capacitor", "PWA"] },
 	{ title: "Backend", items: ["Node.js", "Express", "PHP", "Laravel", "CodeIgniter", "REST APIs"] },
 	{ title: "Commerce & CMS", items: ["Magento", "WordPress", "Payment gateways", "Headless commerce"] },
