@@ -39,8 +39,8 @@ export default function Footer() {
 					</nav>
 				</div>
 
-				<p aria-hidden className="mt-10 select-none whitespace-nowrap font-display text-[22vw] font-medium italic leading-[0.8] tracking-[-0.04em] text-fg/[0.07] md:text-[15rem]">
-					{profile.firstName.toLowerCase()} khan
+				<p aria-hidden className="mt-10 select-none whitespace-nowrap text-center font-display text-[18vw] font-medium italic leading-[0.8] tracking-[-0.04em] text-fg/[0.07] md:text-[13rem]">
+					madmak787
 				</p>
 			</div>
 		</footer>
