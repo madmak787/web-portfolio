@@ -4,30 +4,31 @@
 
 @layer base {
 	:root {
-		--bg: 250 250 249;
-		--surface: 255 255 255;
-		--surface-2: 243 243 241;
-		--line: 17 17 20;
-		--fg: 17 17 20;
-		--muted: 95 95 107;
-		--accent: 217 45 53;
-		--accent-fg: 255 255 255;
-		--ok: 22 163 74;
-		--line-alpha: 0.09;
+		/* Warm paper & ink, with a terracotta accent. */
+		--bg: 246 241 231;
+		--surface: 252 249 243;
+		--surface-2: 238 231 218;
+		--line: 43 36 28;
+		--fg: 30 27 23;
+		--muted: 102 94 83;
+		--accent: 190 70 38;
+		--accent-fg: 255 250 243;
+		--ok: 43 122 88;
+		--line-alpha: 0.13;
 		color-scheme: light;
 	}
 
 	.dark {
-		--bg: 10 10 13;
-		--surface: 18 18 23;
-		--surface-2: 26 26 33;
-		--line: 255 255 255;
-		--fg: 237 237 240;
-		--muted: 154 154 166;
-		--accent: 242 67 75;
-		--accent-fg: 255 255 255;
-		--ok: 74 222 128;
-		--line-alpha: 0.09;
+		--bg: 21 19 16;
+		--surface: 30 27 23;
+		--surface-2: 40 36 30;
+		--line: 255 244 225;
+		--fg: 241 234 221;
+		--muted: 170 160 144;
+		--accent: 236 118 80;
+		--accent-fg: 26 18 12;
+		--ok: 118 200 152;
+		--line-alpha: 0.11;
 		color-scheme: dark;
 	}
 
@@ -53,6 +54,22 @@
 		text-rendering: optimizeLegibility;
 	}
 
+	/* Paper grain: a faint noise layer over everything, so flat colour feels like print. */
+	body::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		z-index: 60;
+		pointer-events: none;
+		opacity: 0.05;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	.dark body::before {
+		opacity: 0.07;
+		mix-blend-mode: screen;
+	}
+
 	::selection {
 		background: rgb(var(--accent) / 0.25);
 	}
@@ -66,11 +83,20 @@
 
 @layer components {
 	.eyebrow {
-		@apply font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-accent sm:text-xs sm:tracking-[0.2em];
+		@apply inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-accent sm:text-xs sm:tracking-[0.2em];
+	}
+
+	.eyebrow::before {
+		content: "";
+		@apply h-px w-6 bg-accent;
 	}
 
 	.section-title {
-		@apply text-balance font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl md:text-[2.75rem] md:leading-[1.1];
+		@apply text-balance font-display text-[2.1rem] font-medium leading-[1.08] tracking-[-0.02em] text-fg sm:text-5xl md:text-[3.4rem];
+	}
+
+	.section-title em {
+		@apply font-normal italic text-accent;
 	}
 
 	.card {
@@ -86,22 +112,39 @@
 	}
 
 	.btn-primary {
-		@apply btn bg-accent text-accent-fg shadow-[0_8px_24px_-8px_rgb(var(--accent)/0.6)] hover:brightness-110;
+		@apply btn bg-fg text-bg hover:bg-accent hover:text-accent-fg;
 	}
 
 	.btn-ghost {
-		@apply btn border bg-surface text-fg hover:bg-surface-2;
+		@apply btn border border-line/25 text-fg hover:border-fg hover:bg-surface;
+	}
+
+	/* A dark "ink" band that stays dark in both themes, by re-scoping the colour tokens. */
+	.ink-section {
+		--bg: 30 27 23;
+		--surface: 40 36 30;
+		--fg: 241 234 221;
+		--muted: 176 166 150;
+		--line: 255 244 225;
+		--line-alpha: 0.14;
+		--accent: 236 118 80;
+		background: rgb(var(--bg));
+		color: rgb(var(--fg));
+	}
+
+	.dark .ink-section {
+		--bg: 12 11 9;
+	}
+
+	.link-underline {
+		@apply bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 hover:bg-[length:100%_1px];
+		background-image: linear-gradient(currentColor, currentColor);
 	}
 
 	.icon-btn {
 		@apply inline-flex h-10 w-10 items-center justify-center rounded-full border bg-surface text-muted transition-colors hover:bg-surface-2 hover:text-fg;
 	}
 
-	.grid-bg {
-		background-image: linear-gradient(rgb(var(--line) / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--line) / 0.05) 1px, transparent 1px);
-		background-size: 48px 48px;
-		mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
-	}
 }
 
 /* Scroll reveal: only hides content once JS has marked the page, so no-JS visitors still see everything. */
@@ -134,6 +177,7 @@
 	*::before,
 	*::after {
 		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
 	}
 }

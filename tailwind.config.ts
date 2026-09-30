@@ -9,7 +9,7 @@ const config = {
 		container: {
 			center: true,
 			padding: { DEFAULT: "1rem", sm: "1.5rem", lg: "2rem" },
-			screens: { "2xl": "1200px" },
+			screens: { "2xl": "1180px" },
 		},
 		extend: {
 			colors: {
@@ -33,9 +33,13 @@ const config = {
 					"0%, 100%": { opacity: "1" },
 					"50%": { opacity: "0.35" },
 				},
+				"spin-slow": {
+					to: { transform: "rotate(360deg)" },
+				},
 			},
 			animation: {
 				"pulse-dot": "pulse-dot 2s ease-in-out infinite",
+				"spin-slow": "spin-slow 24s linear infinite",
 			},
 		},
 	},

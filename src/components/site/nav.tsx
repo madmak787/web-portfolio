@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Briefcase, Home, Layers, Mail, Sparkles } from "lucide-react";
+import { BookOpen, Home, Mail, Sparkles, Sunrise } from "lucide-react";
 import { navItems, profile } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./theme-toggle";
+import LocalTime from "./local-time";
 
-const icons = { home: Home, work: Sparkles, skills: Layers, experience: Briefcase, contact: Mail };
+const icons = { home: Home, work: Sparkles, story: BookOpen, now: Sunrise, contact: Mail };
 
 export default function Nav() {
 	const [active, setActive] = useState<string>("home");
@@ -38,25 +39,32 @@ export default function Nav() {
 
 	return (
 		<>
-			<header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-300", scrolled ? "border-b bg-bg/75 backdrop-blur-xl" : "border-b border-transparent")}>
+			<header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-300", scrolled ? "border-b bg-bg/80 backdrop-blur-xl" : "border-b border-transparent")}>
 				<div className="container flex h-16 items-center justify-between gap-4">
-					<a href="#home" className="group flex items-center gap-2.5" aria-label={`${profile.name}, back to top`}>
-						<span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent font-display text-sm font-bold text-accent-fg transition-transform group-hover:-rotate-6">
+					<a href="#home" className="group flex items-center gap-3" aria-label={`${profile.name}, back to top`}>
+						<span className="flex h-9 w-9 items-center justify-center rounded-full border border-fg/80 font-display text-[13px] font-semibold italic transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-accent-fg">
 							{profile.short}
 						</span>
-						<span className="hidden font-display text-[15px] font-semibold sm:block">{profile.name}</span>
+						<span className="hidden leading-tight sm:block">
+							<span className="block font-display text-[17px] font-medium">{profile.name}</span>
+							<span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted">
+								<span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-ok" />
+								Lucknow · <LocalTime />
+							</span>
+						</span>
 					</a>
 
 					<nav aria-label="Primary" className="hidden md:block">
-						<ul className="flex items-center gap-1 rounded-full border bg-surface/70 p-1 backdrop-blur">
+						<ul className="flex items-center gap-7">
 							{navItems.slice(1).map(({ id, label }) => (
 								<li key={id}>
 									<a
 										href={`#${id}`}
 										aria-current={active === id ? "true" : undefined}
-										className={cn("block rounded-full px-4 py-1.5 text-sm font-medium transition-colors", active === id ? "bg-fg text-bg" : "text-muted hover:text-fg")}
+										className={cn("relative py-1 text-sm font-medium transition-colors", active === id ? "text-fg" : "text-muted hover:text-fg")}
 									>
 										{label}
+										<span className={cn("absolute -bottom-0.5 left-0 h-px bg-accent transition-all duration-300", active === id ? "w-full" : "w-0")} />
 									</a>
 								</li>
 							))}
@@ -65,15 +73,15 @@ export default function Nav() {
 
 					<div className="flex items-center gap-2">
 						<ThemeToggle />
-						<a href={`mailto:${profile.email}`} className="btn-primary hidden h-10 sm:inline-flex">
-							Let&apos;s talk
+						<a href="#contact" className="btn-primary hidden h-10 sm:inline-flex">
+							Say hello
 						</a>
 					</div>
 				</div>
 			</header>
 
 			{/* Mobile: app-style bottom tab bar within thumb reach */}
-			<nav aria-label="Sections" className="fixed inset-x-0 bottom-0 z-50 border-t bg-bg/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden">
+			<nav aria-label="Sections" className="fixed inset-x-0 bottom-0 z-50 border-t bg-bg/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden">
 				<ul className="mx-auto grid max-w-md grid-cols-5">
 					{navItems.map(({ id, label }) => {
 						const Icon = icons[id];

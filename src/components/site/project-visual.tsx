@@ -1,11 +1,12 @@
 import type { Project } from "@/lib/data";
 
 // Lightweight illustrated mockups so each card has a visual without shipping screenshots.
-export default function ProjectVisual({ type }: { type: Project["visual"] }) {
+export default function ProjectVisual({ type, large }: { type: Project["visual"]; large?: boolean }) {
 	return (
-		<div aria-hidden className="relative aspect-[16/10] overflow-hidden rounded-xl border bg-surface-2">
-			<div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_100%_0%,rgb(var(--accent)/0.18),transparent_60%)]" />
-			<div className="relative flex h-full items-center justify-center p-5">{visuals[type]}</div>
+		<div aria-hidden className={`relative overflow-hidden rounded-xl border bg-surface-2 ${large ? "aspect-[16/11] rounded-2xl lg:aspect-auto lg:min-h-[380px]" : "aspect-[16/10]"}`}>
+			<div className="absolute inset-0 bg-[radial-gradient(rgb(var(--line)/0.12)_1px,transparent_1px)] [background-size:14px_14px]" />
+			<div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_100%_0%,rgb(var(--accent)/0.16),transparent_60%)]" />
+			<div className={`relative flex h-full items-center justify-center p-5 ${large ? "lg:absolute lg:inset-0 lg:scale-[1.35]" : ""}`}>{visuals[type]}</div>
 		</div>
 	);
 }

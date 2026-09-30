@@ -1,77 +1,56 @@
-import { ArrowRight, FileDown, Github, Linkedin, MapPin } from "lucide-react";
-import { profile, stats } from "@/lib/data";
+import { ArrowDown, ArrowUpRight, FileDown } from "lucide-react";
+import { languages, profile, stats } from "@/lib/data";
+import { cn } from "@/lib/utils";
+import LocalTime from "./local-time";
 
 export default function Hero() {
 	return (
-		<section id="home" className="relative overflow-hidden pb-10 pt-20 sm:pb-12 sm:pt-32 md:pb-16 md:pt-40">
-			<div className="grid-bg pointer-events-none absolute inset-0" />
-			<div className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[780px] -translate-x-1/2 rounded-full bg-accent/15 blur-[120px]" />
+		<section id="home" className="relative overflow-hidden pb-14 pt-24 sm:pt-32 md:pb-20 md:pt-40">
+			<div className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-accent/10 blur-[120px]" />
 
-			<div className="container relative grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+			<div className="container relative grid items-center gap-14 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
 				<div className="min-w-0">
-					<div className="reveal mb-5 inline-flex max-w-full items-center gap-2 rounded-full border bg-surface/80 py-1.5 pl-2 pr-3.5 text-[11px] font-medium leading-snug text-muted backdrop-blur sm:mb-6 sm:text-xs">
-						<span className="relative flex h-2 w-2">
-							<span className="absolute inline-flex h-full w-full animate-pulse-dot rounded-full bg-ok" />
-							<span className="relative inline-flex h-2 w-2 rounded-full bg-ok" />
-						</span>
-						<MapPin className="h-3.5 w-3.5" />
-						{profile.location} · {profile.availability}
-					</div>
-
-					<p className="reveal eyebrow mb-3 leading-relaxed sm:mb-4" style={{ "--delay": "60ms" } as React.CSSProperties}>
-						<span className="sm:hidden">
-							{profile.name}
-							<br />
-							{profile.role.replace("-", "\u2011")}
-						</span>
-						<span className="hidden sm:inline">
-							{profile.name} — {profile.role}
-						</span>
+					<p className="reveal font-display text-2xl italic text-accent sm:text-3xl">
+						Aadaab<span className="text-muted">,</span>
+						<span className="ml-3 align-middle font-mono text-[10px] not-italic uppercase tracking-[0.18em] text-muted sm:text-[11px]">a Lucknowi hello</span>
 					</p>
 
-					<h1 className="reveal text-balance font-display text-[2.15rem] font-semibold leading-[1.05] tracking-tight sm:text-6xl sm:leading-[1.04] xl:text-7xl" style={{ "--delay": "120ms" } as React.CSSProperties}>
-						I ship complete products<span className="text-accent">.</span>
-						<span className="mt-2 block text-muted">
-							Web, iOS &amp; <span className="whitespace-nowrap">e-commerce.</span>
-						</span>
+					<h1
+						className="reveal mt-4 text-balance font-display text-[2.6rem] font-medium leading-[1.02] tracking-[-0.03em] sm:text-7xl sm:leading-[0.98] xl:text-[5.4rem]"
+						style={{ "--delay": "80ms" } as React.CSSProperties}
+					>
+						I&apos;m {profile.firstName}. I&apos;ve been <em className="font-normal text-accent">shipping</em> software since 2013.
 					</h1>
 
-					<p className="reveal mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg" style={{ "--delay": "180ms" } as React.CSSProperties}>
-						{profile.intro}
+					<p className="reveal mt-7 max-w-xl text-base leading-relaxed text-muted sm:text-lg" style={{ "--delay": "160ms" } as React.CSSProperties}>
+						Storefronts, payment flows, dashboards, iOS apps and a shelf of free tools: <span className="text-fg">300+ websites</span> so far. Today I lead a full-stack team at{" "}
+						<span className="text-fg">eClerx</span>, and I still write code every week.
 					</p>
 
-					<div className="reveal mt-8 flex flex-wrap items-center gap-3" style={{ "--delay": "240ms" } as React.CSSProperties}>
+					<div className="reveal mt-9 flex flex-wrap items-center gap-3" style={{ "--delay": "240ms" } as React.CSSProperties}>
 						<a href="#work" className="btn-primary group">
 							See my work
-							<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+							<ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
 						</a>
-						<a href="#contact" className="btn-ghost">
-							Get in touch
+						<a href="#story" className="btn-ghost">
+							Read my story
 						</a>
 						<a href={profile.links.resume} target="_blank" rel="noopener" className="btn-ghost">
 							<FileDown className="h-4 w-4" />
 							Resume
 						</a>
-						<div className="flex items-center gap-2 sm:ml-1">
-							<a href={profile.social.github} target="_blank" rel="noreferrer" className="icon-btn" aria-label="GitHub">
-								<Github className="h-4 w-4" />
-							</a>
-							<a href={profile.social.linkedin} target="_blank" rel="noreferrer" className="icon-btn" aria-label="LinkedIn">
-								<Linkedin className="h-4 w-4" />
-							</a>
-						</div>
 					</div>
 				</div>
 
-				<ProfileCard />
+				<VisitingCard />
 			</div>
 
-			<div className="container relative mt-14 md:mt-20">
-				<dl className="reveal grid grid-cols-2 overflow-hidden rounded-2xl border bg-line/[0.09] md:grid-cols-4" style={{ gap: "1px" }}>
-					{stats.map((s) => (
-						<div key={s.label} className="flex h-full flex-col bg-surface px-4 py-5 sm:px-7 sm:py-6">
-							<dt className="text-xs font-medium leading-snug text-muted sm:text-sm">{s.label}</dt>
-							<dd className="mt-auto pt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">{s.value}</dd>
+			<div className="container relative mt-16 md:mt-24">
+				<dl className="reveal grid grid-cols-2 border-y md:grid-cols-4">
+					{stats.map((s, i) => (
+						<div key={s.label} className={cn("flex flex-col-reverse justify-end gap-1 py-6 pr-4", i % 2 ? "border-l pl-5 sm:pl-7" : i > 0 && "md:border-l md:pl-7", i < 2 && "max-md:border-b")}>
+							<dt className="text-xs leading-snug text-muted sm:text-sm">{s.label}</dt>
+							<dd className="font-display text-4xl font-medium tracking-tight sm:text-5xl">{s.value}</dd>
 						</div>
 					))}
 				</dl>
@@ -80,47 +59,67 @@ export default function Hero() {
 	);
 }
 
-function ProfileCard() {
-	const lines: [string, string][] = [
-		["role", `"${profile.role}"`],
-		["based", `"${profile.location}"`],
-		["ships", `["web", "iOS", "e-commerce"]`],
-		["stack", `["Next.js", "React Native", "Ionic", "Capacitor"]`],
-		["workflow", `"AI to prototype, engineering to harden"`],
+// A visiting card instead of a stock photo: the facts someone would ask on a first call.
+function VisitingCard() {
+	const rows: [string, React.ReactNode][] = [
+		["Based in", profile.location],
+		["Local time", <LocalTime key="t" className="tabular-nums" />],
+		["Currently", profile.currently],
+		["Writing", <a key="w" href={profile.links.mak365} target="_blank" rel="noreferrer" className="link-underline">#MAK365 on LinkedIn</a>],
+		["Speaks", languages.map((l) => l.name).join(", ")],
 	];
 
 	return (
-		<div className="reveal relative mx-auto hidden w-full min-w-0 max-w-md md:block lg:max-w-none" style={{ "--delay": "200ms" } as React.CSSProperties}>
-			<div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/40 via-transparent to-transparent opacity-60" />
-			<div className="card relative overflow-hidden shadow-2xl shadow-black/10">
-				<div className="flex items-center justify-between border-b px-4 py-3">
-					<div className="flex gap-1.5">
-						<span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-						<span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-						<span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+		<div className="reveal relative mx-auto w-full max-w-md lg:max-w-none" style={{ "--delay": "200ms" } as React.CSSProperties}>
+			<div className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border bg-surface-2 sm:rotate-2" />
+			<div className="relative rounded-2xl border bg-surface p-6 shadow-[0_30px_60px_-30px_rgb(var(--line)/0.35)] sm:-rotate-1 sm:p-7">
+				<div className="flex items-start justify-between gap-4">
+					<div>
+						<p className="font-display text-2xl font-medium leading-tight">{profile.name}</p>
+						<p className="mt-1 text-sm text-muted">{profile.role}</p>
 					</div>
-					<span className="font-mono text-[11px] text-muted">mak.ts</span>
-					<span className="w-10" />
+					<Stamp />
 				</div>
-				<pre className="whitespace-pre-wrap break-words p-5 font-mono text-[12px] leading-6 sm:text-[13px] sm:leading-7">
-					<code>
-						<span className="text-accent">const</span> <span className="text-fg">mak</span> <span className="text-muted">=</span> {"{"}
-						{"\n"}
-						{lines.map(([k, v]) => (
-							<span key={k}>
-								{"  "}
-								<span className="text-fg">{k}</span>
-								<span className="text-muted">: </span>
-								<span className="text-ok">{v}</span>
-								<span className="text-muted">,</span>
-								{"\n"}
-							</span>
-						))}
-						{"}"};
-						<span className="ml-0.5 inline-block h-4 w-[7px] translate-y-0.5 animate-pulse-dot bg-accent" />
-					</code>
-				</pre>
+
+				<dl className="mt-6 divide-y border-t">
+					{rows.map(([k, v]) => (
+						<div key={k} className="flex items-baseline justify-between gap-4 py-2.5 text-sm">
+							<dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">{k}</dt>
+							<dd className="text-right font-medium">{v}</dd>
+						</div>
+					))}
+				</dl>
+
+				<div className="mt-5 flex items-center justify-between gap-3 border-t pt-5">
+					<a href={`mailto:${profile.email}`} className="link-underline truncate text-sm font-medium">
+						{profile.email}
+					</a>
+					<div className="flex gap-3 font-mono text-[11px] uppercase tracking-wider text-muted">
+						<a href={profile.social.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 hover:text-accent">
+							GH <ArrowUpRight className="h-3 w-3" />
+						</a>
+						<a href={profile.social.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 hover:text-accent">
+							IN <ArrowUpRight className="h-3 w-3" />
+						</a>
+					</div>
+				</div>
 			</div>
+		</div>
+	);
+}
+
+function Stamp() {
+	return (
+		<div aria-hidden className="relative -mr-2 -mt-2 h-[84px] w-[84px] shrink-0 text-accent">
+			<svg viewBox="0 0 100 100" className="h-full w-full animate-spin-slow">
+				<defs>
+					<path id="stamp-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+				</defs>
+				<text className="fill-current font-mono" fontSize="9.2" letterSpacing="2.1">
+					<textPath href="#stamp-circle">OPEN TO REMOTE WORK • WORLDWIDE •</textPath>
+				</text>
+			</svg>
+			<span className="absolute inset-0 flex items-center justify-center font-display text-lg font-semibold italic">{profile.short}</span>
 		</div>
 	);
 }

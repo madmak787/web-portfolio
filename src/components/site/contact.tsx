@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Check, Copy, Github, Linkedin, Mail, MessageCircle, Send } from "lucide-react";
 import { profile } from "@/lib/data";
+import LocalTime from "./local-time";
 
 const channels = [
 	{ label: "LinkedIn", detail: "in/madmak787", href: profile.social.linkedin, icon: Linkedin },
@@ -37,18 +38,22 @@ export default function Contact() {
 	};
 
 	return (
-		<section id="contact" className="py-16 md:py-24">
+		<section id="contact" className="pb-16 md:pb-28">
 			<div className="container">
-				<div className="reveal relative overflow-hidden rounded-3xl border bg-surface p-6 sm:p-10 lg:p-14">
-					<div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-accent/20 blur-[100px]" />
+				<div className="reveal relative overflow-hidden rounded-[2rem] border bg-surface p-6 sm:p-10 lg:p-16">
+					<div className="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/15 blur-[110px]" />
 
-					<div className="relative grid gap-12 lg:grid-cols-2">
+					<div className="relative grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
 						<div>
-							<p className="eyebrow mb-3">Contact</p>
-							<h2 className="section-title">Have a product to ship? Let&apos;s talk.</h2>
-							<p className="mt-4 max-w-md text-muted">Tell me what you&apos;re building. I usually reply within a day, from Lucknow (IST, UTC+5:30).</p>
+							<p className="eyebrow mb-4">Contact</p>
+							<h2 className="text-balance font-display text-[2.6rem] font-medium leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+								Have something to build? <em className="font-normal italic text-accent">Let&apos;s talk.</em>
+							</h2>
+							<p className="mt-6 max-w-md text-muted">
+								Tell me what you&apos;re working on. It&apos;s <LocalTime className="font-medium text-fg tabular-nums" /> in Lucknow right now (IST, UTC+5:30), and I usually reply within a day.
+							</p>
 
-							<div className="mt-8 flex flex-col gap-3 sm:flex-row">
+							<div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
 								<a href={`mailto:${profile.email}`} className="btn-primary">
 									<Mail className="h-4 w-4" />
 									Email me
@@ -59,23 +64,22 @@ export default function Contact() {
 								</button>
 							</div>
 
-							<ul className="mt-8 grid gap-3 sm:grid-cols-3">
+							<ul className="mt-10 border-t">
 								{channels.map(({ label, detail, href, icon: Icon }) => (
 									<li key={label}>
-										<a href={href} target="_blank" rel="noreferrer" className="group flex items-center gap-3 rounded-2xl border bg-surface-2/60 p-3.5 transition-colors hover:border-accent/40 sm:flex-col sm:items-start">
-											<Icon className="h-5 w-5 text-accent" />
-											<div className="flex-1">
-												<p className="text-sm font-semibold">{label}</p>
-												<p className="text-xs text-muted">{detail}</p>
-											</div>
-											<ArrowUpRight className="h-4 w-4 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:hidden" />
+										<a href={href} target="_blank" rel="noreferrer" className="group flex items-center gap-4 border-b py-4 transition-colors hover:text-accent">
+											<Icon className="h-5 w-5 text-muted transition-colors group-hover:text-accent" />
+											<span className="font-display text-xl font-medium">{label}</span>
+											<span className="ml-auto text-sm text-muted">{detail}</span>
+											<ArrowUpRight className="h-4 w-4 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
 										</a>
 									</li>
 								))}
 							</ul>
 						</div>
 
-						<form onSubmit={onSubmit} className="space-y-4">
+						<form onSubmit={onSubmit} className="space-y-4 self-end rounded-2xl border bg-bg/60 p-5 sm:p-7">
+							<p className="font-display text-2xl font-medium italic">Write me a note</p>
 							<div className="grid gap-4 sm:grid-cols-2">
 								<Field label="Name" name="name" autoComplete="name" required />
 								<Field label="Email" name="email" type="email" autoComplete="email" required />
@@ -87,14 +91,14 @@ export default function Contact() {
 									required
 									rows={5}
 									placeholder="A few lines about the product, timeline and stack…"
-									className="w-full resize-none rounded-xl border bg-bg px-4 py-3 text-[16px] outline-none transition-colors placeholder:text-muted/60 focus:border-accent sm:text-sm"
+									className="w-full resize-none rounded-xl border bg-surface px-4 py-3 text-[16px] outline-none transition-colors placeholder:text-muted/70 focus:border-accent sm:text-sm"
 								/>
 							</label>
-							<button type="submit" className="btn-primary w-full sm:w-auto">
+							<button type="submit" className="btn-primary w-full">
 								<Send className="h-4 w-4" />
 								Send message
 							</button>
-							<p className="text-xs text-muted">Opens your email app with the message ready to send.</p>
+							<p className="text-center text-xs text-muted">Opens your email app with the message ready to send.</p>
 						</form>
 					</div>
 				</div>
@@ -107,7 +111,7 @@ function Field({ label, ...props }: { label: string } & React.InputHTMLAttribute
 	return (
 		<label className="block">
 			<span className="mb-1.5 block text-sm font-medium">{label}</span>
-			<input {...props} className="h-12 w-full rounded-xl border bg-bg px-4 text-[16px] outline-none transition-colors placeholder:text-muted/60 focus:border-accent sm:text-sm" />
+			<input {...props} className="h-12 w-full rounded-xl border bg-surface px-4 text-[16px] outline-none transition-colors placeholder:text-muted/70 focus:border-accent sm:text-sm" />
 		</label>
 	);
 }
